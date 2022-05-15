@@ -22,7 +22,12 @@ public class LoanController {
     }
 
     @GetMapping("/loan-collection")
-    public List<Loan> getLoans(@RequestParam(required = false) Date from, @RequestParam(required = false) Date to){
-        return (List<Loan>) iLoanService.getLoans();
+    public List<Loan> getLoans(
+            @RequestParam(required = false) String from,
+            @RequestParam(required = false) String to,
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize){
+        return (List<Loan>) iLoanService.getLoans(from,to,pageNo,pageSize);
     }
+
 }
