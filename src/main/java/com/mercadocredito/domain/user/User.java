@@ -17,4 +17,6 @@ public class User implements Serializable {
     private long id;
     private String name;
     private String target;
+    private int cant;
+    private float amountTotal;
 }

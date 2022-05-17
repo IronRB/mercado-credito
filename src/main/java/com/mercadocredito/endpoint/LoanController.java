@@ -3,7 +3,12 @@ package com.mercadocredito.endpoint;
 import com.mercadocredito.domain.loan.ILoanService;
 import com.mercadocredito.domain.loan.Loan;
 import com.mercadocredito.domain.loan.ILoanRepository;
+import com.mercadocredito.domain.loan.input.LoanInput;
+import com.mercadocredito.domain.loan.output.LoanOutput;
+import com.mercadocredito.domain.user.User;
+import com.mercadocredito.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -28,6 +33,12 @@ public class LoanController {
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize){
         return (List<Loan>) iLoanService.getLoans(from,to,pageNo,pageSize);
+    }
+
+    @PostMapping("/register-loan")
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public LoanOutput postLoan(@RequestBody LoanInput request){
+        return iLoanService.postLoan(request);
     }
 
 }
