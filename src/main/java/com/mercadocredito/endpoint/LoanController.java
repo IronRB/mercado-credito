@@ -37,8 +37,6 @@ public class LoanController {
 
     @PostMapping("/register-loan")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public LoanOutput postLoan(@RequestBody LoanInput request){
-        return iLoanService.postLoan(request);
-    }
+    public LoanOutput postLoan(@RequestBody LoanInput request){return iLoanService.postLoan(request);}
 
 }

@@ -21,7 +21,11 @@ public class LoanService implements ILoanService {
 
     @Autowired
     private ILoanRepository loanRepository;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private ITargetRepository targetRepository;
 
     @Override
@@ -38,11 +42,21 @@ public class LoanService implements ILoanService {
     }
 
     public LoanOutput postLoan(LoanInput request){
+        LoanOutput loanOutput = null;
+        float rate = 0;
         User user = userRepository.findById(request.getUserId()).orElse(null);
         user.setCant(user.getCant() + 1);
         user.setAmountTotal(user.getAmountTotal() + request.getAmount());
         List<Target> targets = targetRepository.findAll();
-        targets.forEach((target) -> System.out.println(target));
+        for (Target target: targets) {
+            if(target.getCantMin()>= user.getCant() && target.getCantMax()<= user.getCant())
+            {
+                user.setTarget(target.getTarget());
+                rate = target.getRate();
+            }
+        }
+        userRepository.save(user);
+        loanOutput.setInstallment(((rate/12)+(rate/12)/((float)Math.pow((1+(rate/12)),12-1)))* request.getAmount());
         return null;
     }
 

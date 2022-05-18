@@ -8,5 +8,5 @@ import lombok.Data;
 public class LoanInput {
     private float amount;
     private int term;
-    private int userId;
+    private long userId;
 }
