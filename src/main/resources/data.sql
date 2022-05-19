@@ -1,6 +1,6 @@
 INSERT INTO user(name,target,cant,amount_total) VALUES('Robert','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Carlos','New',0,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Camilo','New',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Camilo','New',6,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Eliana','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('David','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Sebastian','New',0,0);
@@ -13,6 +13,6 @@ VALUES(99999,0,1,0,500000,0.15,'NEW');
 INSERT INTO target(AMOUNT_TOTAL_MAX,AMOUNT_TOTAL_MIN,CANT_MAX,CANT_MIN,MAX,RATE,target)
 VALUES(500000,100000,5,2,1000000,0.10,'FREQUENT');
 INSERT INTO target(AMOUNT_TOTAL_MAX,AMOUNT_TOTAL_MIN,CANT_MAX,CANT_MIN,MAX,RATE,target)
-VALUES(9999999,500001,6,99,500000,0.05,'PREMIUM');
+VALUES(9999999,500001,99,6,500000,0.05,'PREMIUM');
 
 COMMIT;
