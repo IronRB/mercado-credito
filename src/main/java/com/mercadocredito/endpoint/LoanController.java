@@ -21,11 +21,6 @@ public class LoanController {
     @Autowired
     private ILoanService iLoanService;
 
-    @GetMapping("/")
-    public String hello(){
-        return "Hello World";
-    }
-
     @GetMapping("/loan-collection")
     public List<Loan> getLoans(
             @RequestParam(required = false) String from,

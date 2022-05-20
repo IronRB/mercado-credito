@@ -1,5 +1,14 @@
 package com.mercadocredito.domain.loan;
 
+/**
+ * Clase LoanService
+ *
+ * Contiene la lógica de negocio de los préstamos
+ *
+ * @author Robert Carmona
+ * @version 1.0
+ */
+
 import com.mercadocredito.domain.loan.input.LoanInput;
 import com.mercadocredito.domain.loan.output.LoanOutput;
 import com.mercadocredito.domain.target.ITargetRepository;
@@ -31,6 +40,14 @@ public class LoanService implements ILoanService {
     @Autowired
     private ITargetRepository targetRepository;
 
+    /**
+     * Obtiene la lista de prestamos filtrando por fecha y realiza paginación
+     * @param from fecha inicial del filtro
+     * @param to fecha final del filtro
+     * @param pageNo número de pagina
+     * @param pageSize tamaño de páginas
+     * @return la lista de prestamos solicitada
+     */
     @Override
     public List<Loan> getLoans(String from, String to, Integer pageNo, Integer pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
@@ -44,6 +61,11 @@ public class LoanService implements ILoanService {
         }
     }
 
+    /**
+     * Crea una solicitud de préstamo
+     * @param request Payload que contiene el monto del prestamo, número de cuotas y el id del usuario
+     * @return el id del préstamo creado y el calculo de la cuota
+     */
     public LoanOutput postLoan(LoanInput request){
         float rate = 0;
         User user = userRepository.findById(request.getUserId()).orElse(null);
