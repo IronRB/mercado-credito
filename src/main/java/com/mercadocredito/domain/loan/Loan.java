@@ -1,6 +1,7 @@
 package com.mercadocredito.domain.loan;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Loan implements Serializable {
 
     @Id
@@ -18,5 +20,5 @@ public class Loan implements Serializable {
     private long userId;
 
     @Column(name="date")
-    private Date date;
+    private String date;
 }

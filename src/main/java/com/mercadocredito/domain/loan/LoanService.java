@@ -6,6 +6,7 @@ import com.mercadocredito.domain.target.ITargetRepository;
 import com.mercadocredito.domain.target.Target;
 import com.mercadocredito.domain.user.User;
 import com.mercadocredito.domain.user.UserRepository;
+import com.mercadocredito.utils.ArithmeticOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -42,8 +45,6 @@ public class LoanService implements ILoanService {
     }
 
     public LoanOutput postLoan(LoanInput request){
-        LoanOutput loanOutput = null;
-        float installment = 0;
         float rate = 0;
         User user = userRepository.findById(request.getUserId()).orElse(null);
         user.setCant(user.getCant() + 1);
@@ -54,34 +55,21 @@ public class LoanService implements ILoanService {
             {
                 user.setTarget(target.getTarget());
                 rate = target.getRate();
-                System.out.println(target.getTarget());
             }
-            System.out.println(user);
         }
         userRepository.save(user);
-        //loanOutput.setInstallment(((rate/12)+(rate/12)/((float)Math.pow((1+(rate/12)),12-1)))* request.getAmount());
-        //loanOutput.setInstallment((float)12.5);
-        float r = rate/12;
-        //float pot = ((float)Math.pow((1+r),12-1));
-        float pot = potencia((1+r),(12-1));
-        System.out.println("rate: "+r);
-        System.out.println("pot: "+((float)Math.pow((1+(rate/12)),12-1)));
-        System.out.println("result: "+ (r+r/pot) * request.getAmount());
-        System.out.println("result2: "+ (r+(0.05/12)/(float)Math.pow((1+(rate/12)),12-1)));
-        //System.out.println(loanOutput.getInstallment());
-        return null;
-    }
+        Loan loan = new Loan();
+        loan.setAmount(request.getAmount());
+        loan.setTerm(request.getTerm());
+        loan.setUserId(user.getId());
+        Date now = new Date();
+        SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        loan.setDate(isoDate.format(now));
 
-    private float potencia(float a, float n){
-        float result;
-        if(n == 0){
-            result = 1;
-        }
-        else{
-            // caso recursivo: a^n = a *a^n-1
-            result = a * potencia(a, n - 1);
-        }
-        return result;
+        loanRepository.save(loan);
+
+        LoanOutput loanOutput = new LoanOutput((int)loan.getId(),ArithmeticOperation.calculateInstallment(rate/12,request.getTerm(),request.getAmount()));
+        return loanOutput;
     }
 
 
