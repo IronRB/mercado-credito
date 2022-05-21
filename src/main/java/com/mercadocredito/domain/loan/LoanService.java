@@ -84,6 +84,7 @@ public class LoanService implements ILoanService {
         loan.setAmount(request.getAmount());
         loan.setTerm(request.getTerm());
         loan.setUserId(user.getId());
+        loan.setBalance(request.getAmount());
         Date now = new Date();
         SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
         loan.setDate(isoDate.format(now));

@@ -6,7 +6,7 @@ INSERT INTO user(name,target,cant,amount_total) VALUES('David','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Sebastian','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Laura','New',0,0);
 
-INSERT INTO loan(amount,term,user_id,date) VALUES(1000,12,1000,'2021-08-05 02:18Z');
+INSERT INTO loan(amount,term,user_id,balance,date) VALUES(1000,12,1,1000,'2021-08-05 02:18Z');
 
 INSERT INTO target(AMOUNT_TOTAL_MAX,AMOUNT_TOTAL_MIN,CANT_MAX,CANT_MIN,MAX,RATE,target)
 VALUES(99999,0,1,0,500000,0.15,'NEW');
