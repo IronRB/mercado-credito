@@ -2,9 +2,12 @@ package com.mercadocredito.domain.payment;
 
 import com.mercadocredito.domain.loan.ILoanRepository;
 import com.mercadocredito.domain.loan.Loan;
+import com.mercadocredito.domain.payment.input.PaymentInput;
 import com.mercadocredito.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PaymentService implements IPaymentService{
 
     @Autowired
@@ -15,19 +18,19 @@ public class PaymentService implements IPaymentService{
 
     /**
      * @param loanId codigo único que identifica el préstamo
-     * @param amount valor del monto del pago
+     * @param paymentInput mensaje de entrada que contiene el valor del monto del pago
      * @return un pago creado
      */
     @Override
-    public Payment postPayment(Integer loanId, float amount) {
+    public Payment postPayment(long loanId, PaymentInput paymentInput) {
         Loan loan = iLoanRepository.findById(loanId).orElse(null);
-        if(amount<=loan.getBalance()){
-            loan.setBalance(loan.getBalance()-amount);
+        if(paymentInput.getAmount()<=loan.getBalance()){
+            loan.setBalance(loan.getBalance()-paymentInput.getAmount());
             iLoanRepository.save(loan);
             Payment payment = new Payment();
             payment.setLoanId(loanId);
             payment.setDebt(loan.getBalance());
-            payment.setAmount(amount);
+            payment.setAmount(paymentInput.getAmount());
             iPaymentRepository.save(payment);
             return payment;
         }else{
