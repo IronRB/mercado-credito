@@ -8,6 +8,6 @@ public interface IPaymentService {
 
     public PaymentOutput postPayment(long loanId, PaymentInput paymentInput);
 
-    public DebtOutput getBalance(long loanId, String date);
+    public DebtOutput getBalance(Long loanId, String date);
 
 }

@@ -52,13 +52,15 @@ public class PaymentService implements IPaymentService{
      * @return el monto de la deuda
      */
     @Override
-    public DebtOutput getBalance(long loanId, String date) {
+    public DebtOutput getBalance(Long loanId, String date) {
         List<Payment> payment = null;
         DebtOutput debtOutput = null;
-        if (0L!=loanId || null!=date){
-            if(0L!=loanId){
+        if (null!=loanId || null!=date){
+            if(null!=loanId){
                 payment = iPaymentRepository.findByLoanId(loanId);
                 debtOutput = new DebtOutput(payment.get(payment.size()-1).getDebt());
+            }else {
+                throw new ResourceNotFoundException(400,"No se enviaron parametros para realizar la consulta");
             }
             if(null!=date){
                 payment = iPaymentRepository.findByDate(date);

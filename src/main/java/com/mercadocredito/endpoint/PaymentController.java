@@ -28,7 +28,7 @@ public class PaymentController {
     @GetMapping("/payments/debts")
     @ResponseStatus(code = HttpStatus.OK)
     public DebtOutput getBalance(
-            @RequestParam(required = false) long loanId,
+            @RequestParam(required = false) Long loanId,
             @RequestParam(required = false) String date){
         return iPaymentService.getBalance(loanId,date);
     }
