@@ -6,6 +6,7 @@ import com.mercadocredito.domain.payment.input.PaymentInput;
 import com.mercadocredito.domain.payment.output.DebtOutput;
 import com.mercadocredito.domain.payment.output.PaymentOutput;
 import com.mercadocredito.exception.ResourceNotFoundException;
+import com.mercadocredito.utils.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +36,7 @@ public class PaymentService implements IPaymentService{
             payment.setLoanId(loanId);
             payment.setDebt(loan.getBalance());
             payment.setAmount(paymentInput.getAmount());
+            payment.setDate(Calendar.getDateTimeNowISO8601());
             iPaymentRepository.save(payment);
             PaymentOutput paymentOutput = new PaymentOutput(payment.getId(),payment.getLoanId(),payment.getDebt());
             return paymentOutput;

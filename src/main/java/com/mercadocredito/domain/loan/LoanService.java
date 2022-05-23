@@ -16,6 +16,7 @@ import com.mercadocredito.domain.target.Target;
 import com.mercadocredito.domain.user.User;
 import com.mercadocredito.domain.user.UserRepository;
 import com.mercadocredito.utils.ArithmeticOperation;
+import com.mercadocredito.utils.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -85,9 +86,7 @@ public class LoanService implements ILoanService {
         loan.setTerm(request.getTerm());
         loan.setUserId(user.getId());
         loan.setBalance(request.getAmount());
-        Date now = new Date();
-        SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-        loan.setDate(isoDate.format(now));
+        loan.setDate(Calendar.getDateTimeNowISO8601());
 
         loanRepository.save(loan);
 
