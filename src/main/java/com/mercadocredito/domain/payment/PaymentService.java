@@ -9,6 +9,8 @@ import com.mercadocredito.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PaymentService implements IPaymentService{
 
@@ -49,8 +51,8 @@ public class PaymentService implements IPaymentService{
      */
     @Override
     public DebtOutput getBalance(long loanId, String date) {
-        Payment payment = iPaymentRepository.findById(loanId).orElse(null);
-        DebtOutput debtOutput = new DebtOutput(payment.getDebt());
+        List<Payment> payment = iPaymentRepository.findByLoanId(loanId);
+        DebtOutput debtOutput = new DebtOutput(payment.get(payment.size()-1).getDebt());
         return debtOutput;
     }
 
