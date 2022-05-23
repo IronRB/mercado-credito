@@ -8,4 +8,7 @@ import java.util.List;
 @Repository
 public interface IPaymentRepository extends JpaRepository<Payment, Long> {
     List<Payment> findByLoanId(long loanId);
+
+    List<Payment> findByDate(String date);
+
 }
