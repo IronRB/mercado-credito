@@ -72,4 +72,26 @@ public class PaymentService implements IPaymentService{
         return debtOutput;
     }
 
+    /**
+     * @param date
+     * @param target
+     * @return
+     */
+    @Override
+    public DebtOutput getTotalBalance(String date, String target) {
+        float balances = 0;
+        List<Payment> payment = null;
+        List<Loan> loans = iLoanRepository.findAll();
+        for(Loan loan: loans){
+            payment = iPaymentRepository.findByDateLessThanEqual(date);
+            if(payment.size() != 0){
+                balances += payment.get(payment.size()-1).getDebt();
+            }else{
+                balances += loan.getBalance();
+            }
+        }
+        DebtOutput debtOutput = new DebtOutput(balances);
+        return debtOutput;
+    }
+
 }

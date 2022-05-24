@@ -32,4 +32,13 @@ public class PaymentController {
             @RequestParam(required = false) String date){
         return iPaymentService.getBalance(loanId,date);
     }
+
+    @GetMapping("/payments/total-debts")
+    @ResponseStatus(code = HttpStatus.OK)
+    public DebtOutput getTotalBalance(
+            @RequestParam(required = false) String date,
+            @RequestParam(required = false) String target){
+        return iPaymentService.getTotalBalance(date,target);
+    }
+
 }

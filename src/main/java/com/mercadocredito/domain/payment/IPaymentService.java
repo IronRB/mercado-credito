@@ -10,4 +10,5 @@ public interface IPaymentService {
 
     public DebtOutput getBalance(Long loanId, String date);
 
+    DebtOutput getTotalBalance(String date, String target);
 }
