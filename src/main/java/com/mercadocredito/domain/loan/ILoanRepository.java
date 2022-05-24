@@ -10,4 +10,6 @@ import java.util.List;
 public interface ILoanRepository extends JpaRepository<Loan,Long> {
     List<Loan> findByDateBetween(String from, String to);
 
+    List<Loan> findByUserId(Long userId);
+
 }

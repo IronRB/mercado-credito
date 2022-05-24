@@ -5,6 +5,8 @@ import com.mercadocredito.domain.loan.Loan;
 import com.mercadocredito.domain.payment.input.PaymentInput;
 import com.mercadocredito.domain.payment.output.DebtOutput;
 import com.mercadocredito.domain.payment.output.PaymentOutput;
+import com.mercadocredito.domain.user.User;
+import com.mercadocredito.domain.user.UserRepository;
 import com.mercadocredito.exception.ResourceNotFoundException;
 import com.mercadocredito.utils.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class PaymentService implements IPaymentService{
 
     @Autowired
     private IPaymentRepository iPaymentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /**
      * @param loanId codigo único que identifica el préstamo
@@ -81,16 +86,30 @@ public class PaymentService implements IPaymentService{
     public DebtOutput getTotalBalance(String date, String target) {
         float balances = 0;
         List<Payment> payment = null;
-        List<Loan> loans = iLoanRepository.findAll();
-        for(Loan loan: loans){
-            payment = iPaymentRepository.findByDateLessThanEqual(date);
-            if(payment.size() != 0){
-                balances += payment.get(payment.size()-1).getDebt();
-            }else{
-                balances += loan.getBalance();
+        DebtOutput debtOutput = null;
+        if(date != null || target != null){
+            List<Loan> loans = null;
+            if(date != null && target == null){
+                loans = iLoanRepository.findAll();
+            }else {
+                List<User> users = userRepository.findByTarget(target);
+                for(User user: users){
+                    loans = iLoanRepository.findByUserId(user.getId());
+                }
             }
+            for(Loan loan: loans){
+                payment = iPaymentRepository.findByDateLessThanEqual(date);
+                if(payment.size() != 0){
+                    balances += payment.get(payment.size()-1).getDebt();
+                }else{
+                    balances += loan.getBalance();
+                }
+            }
+            debtOutput = new DebtOutput(balances);
+        }else{
+            throw new ResourceNotFoundException(400,"No se enviaron parametros para realizar la consulta");
         }
-        DebtOutput debtOutput = new DebtOutput(balances);
+
         return debtOutput;
     }
 
