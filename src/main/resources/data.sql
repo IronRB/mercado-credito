@@ -1,4 +1,4 @@
-INSERT INTO user(name,target,cant,amount_total) VALUES('Robert','New',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Robert','New',1,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Carlos','New',0,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Camilo','New',6,0);
 INSERT INTO user(name,target,cant,amount_total) VALUES('Eliana','New',0,0);

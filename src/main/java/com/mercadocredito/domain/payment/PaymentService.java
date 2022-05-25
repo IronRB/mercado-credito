@@ -91,18 +91,25 @@ public class PaymentService implements IPaymentService{
             List<Loan> loans = null;
             if(date != null && target == null){
                 loans = iLoanRepository.findAll();
+                for(Loan loan: loans){
+                    payment = iPaymentRepository.findByDateLessThanEqual(date);
+                    if(payment.size() != 0){
+                        balances += payment.get(payment.size()-1).getDebt();
+                    }else{
+                        balances += loan.getBalance();
+                    }
+                }
             }else {
                 List<User> users = userRepository.findByTarget(target);
-                for(User user: users){
-                    loans = iLoanRepository.findByUserId(user.getId());
-                }
-            }
-            for(Loan loan: loans){
-                payment = iPaymentRepository.findByDateLessThanEqual(date);
-                if(payment.size() != 0){
-                    balances += payment.get(payment.size()-1).getDebt();
+                if(users.size() != 0){
+                    for(User user: users){
+                        loans = iLoanRepository.findByUserId(user.getId());
+                        for(Loan loan: loans){
+                            balances += loan.getBalance();
+                        }
+                    }
                 }else{
-                    balances += loan.getBalance();
+                    throw new ResourceNotFoundException(404,"No hay registros con el target enviado");
                 }
             }
             debtOutput = new DebtOutput(balances);
