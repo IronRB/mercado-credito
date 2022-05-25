@@ -51,15 +51,20 @@ public class LoanService implements ILoanService {
      */
     @Override
     public List<Loan> getLoans(String from, String to, Integer pageNo, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNo, pageSize);
+        if(pageNo > 0){
+            Pageable paging = PageRequest.of(pageNo-1, pageSize);
 
-        Page<Loan> pagedResult = loanRepository.findAll(paging);
+            Page<Loan> pagedResult = loanRepository.findAll(paging);
 
-        if(pagedResult.hasContent()) {
-            return pagedResult.getContent();
-        } else {
+            if(pagedResult.hasContent()) {
+                return pagedResult.getContent();
+            } else {
+                return new ArrayList<Loan>();
+            }
+        }else {
             return new ArrayList<Loan>();
         }
+
     }
 
     /**
