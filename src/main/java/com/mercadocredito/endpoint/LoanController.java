@@ -21,7 +21,7 @@ public class LoanController {
     public List<Loan> getLoans(
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String to,
-            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize){
         return (List<Loan>) iLoanService.getLoans(from,to,pageNo,pageSize);
     }
