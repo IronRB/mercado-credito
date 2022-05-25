@@ -63,16 +63,22 @@ public class PaymentService implements IPaymentService{
         if (null!=loanId || null!=date){
             if(null!=loanId){
                 payment = iPaymentRepository.findByLoanId(loanId);
+                if(payment.size()==0){
+                    throw new ResourceNotFoundException(404, "No existen registros asociados al prestamo consultado");
+                }
                 debtOutput = new DebtOutput(payment.get(payment.size()-1).getDebt());
             }else {
-                throw new ResourceNotFoundException(400,"No se enviaron parametros para realizar la consulta");
+                throw new IllegalArgumentException("El id del prestamo no es correcto");
             }
             if(null!=date){
                 payment = iPaymentRepository.findByDate(date);
+                if(payment.size()==0){
+                    throw new ResourceNotFoundException(404, "No existen registros asociados a la fecha consultada");
+                }
                 debtOutput = new DebtOutput(payment.get(payment.size()-1).getDebt());
             }
         }else {
-            throw new ResourceNotFoundException(400,"No se enviaron parametros para realizar la consulta");
+            throw new IllegalArgumentException("No se enviaron parametros para realizar la consulta");
         }
         return debtOutput;
     }

@@ -1,7 +1,9 @@
 package com.mercadocredito.exception;
 
+import com.mercadocredito.exception.Output.ResponseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -30,10 +32,22 @@ public class CommonExceptionAdvice {
      * 400 - Bad Request
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseException IllegalArgumentException(IllegalArgumentException e) {
+        ResponseException responseException = new ResponseException(400,"Bad Request",e.getMessage());
+        logger.error(""+e, e.getMessage());
+        return responseException;
+    }
+
+    /**
+     * 400 - Bad Request
+     */
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ResourceNotFoundException.class)
-    public String ResourceNotFoundException(ResourceNotFoundException e) {
-        logger.error("Recurso no encontrado", e);
-        return e+" no fue encontrado";
+    public ResponseException ResourceNotFoundException(ResourceNotFoundException e) {
+        ResponseException responseException = new ResponseException(404,"Not found",e.getMessage());
+        logger.error("Recurso no encontrado", e.getCause());
+        return responseException;
     }
 
     /**
@@ -41,9 +55,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MissingServletRequestParameterException.class)
-    public String handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+    public ResponseException handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        ResponseException responseException = new ResponseException(400,"Bad Request",e.getMessage());
         logger.error("Parámetro de solicitud faltante", e);
-        return "Falta el parámetro de solicitud";
+        return responseException;
     }
 
     /**
@@ -51,9 +66,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public String handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+    public ResponseException handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        ResponseException responseException = new ResponseException(400,"Bad Request",e.getMessage());
         logger.error("Error al analizar el parámetro", e);
-        return "Error de análisis de parámetros";
+        return responseException;
     }
 
     /**
@@ -61,14 +77,15 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public String handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseException handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         logger.error("Error de validación de parámetros", e);
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
-        return "Error de validación de parámetro =" + message;
+        ResponseException responseException = new ResponseException(400,"Bad Request","El parámetro " + message);
+        return responseException;
     }
 
     /**
@@ -76,14 +93,15 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
-    public String handleBindException(BindException e) {
+    public ResponseException handleBindException(BindException e) {
         logger.error("Error de enlace de parámetros", e);
         BindingResult result = e.getBindingResult();
         FieldError error = result.getFieldError();
         String field = error.getField();
         String code = error.getDefaultMessage();
         String message = String.format("%s:%s", field, code);
-        return "Error de enlace de parámetro =" + message;
+        ResponseException responseException = new ResponseException(400,"Bad Request","Error de enlace de parámetro =" + message);
+        return responseException;
     }
 
     /**
@@ -91,9 +109,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ValidationException.class)
-    public String handleValidationException(ValidationException e) {
-        logger.error("Error de validación de parámetros", e);
-        return "Error de validación de parámetros";
+    public ResponseException handleValidationException(ValidationException e) {
+        ResponseException responseException = new ResponseException(400,"Bad Request",e.getMessage());
+        logger.error("Error de validación de parámetros", e.getMessage());
+        return responseException;
     }
 
     /**
@@ -101,9 +120,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
-    public String noHandlerFoundException(NoHandlerFoundException e) {
-        logger.error("Not Found", e);
-        return "Not Found=" + e;
+    public ResponseException noHandlerFoundException(NoHandlerFoundException e) {
+        ResponseException responseException = new ResponseException(404,"Not found",e.getMessage());
+        logger.error("Not Found", e.getCause());
+        return responseException;
     }
 
 
@@ -112,9 +132,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public String handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+    public ResponseException handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        ResponseException responseException = new ResponseException(405,"Method Not Allowed","request_method_not_supported");
         logger.error("El método de solicitud actual no es compatible", e);
-        return "request_method_not_supported";
+        return responseException;
     }
 
     /**
@@ -122,9 +143,10 @@ public class CommonExceptionAdvice {
      */
     @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public String handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+    public ResponseException handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+        ResponseException responseException = new ResponseException(415,"Unsupported Media Type","content_type_not_supported");
         logger.error("El tipo de medio actual no es compatible", e);
-        return "content_type_not_supported";
+        return responseException;
     }
 
 /**

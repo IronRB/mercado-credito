@@ -50,17 +50,27 @@ public class LoanService implements ILoanService {
      * @return la lista de prestamos solicitada
      */
     @Override
-    public List<Loan> getLoans(String from, String to, Integer pageNo, Integer pageSize) {
+    public List<Loan> getLoans(String from, String to, Integer pageNo, Integer pageSize){
 
+        try{
             Pageable paging = PageRequest.of(pageNo-1, pageSize);
 
-            Page<Loan> pagedResult = loanRepository.findAll(paging);
+            Page<Loan> pagedResult = null;
+
+            if(from != null && to != null){
+                pagedResult = loanRepository.findByDateBetween(paging,from,to);
+            }else {
+                pagedResult = loanRepository.findAll(paging);
+            }
 
             if(pagedResult.hasContent()) {
                 return pagedResult.getContent();
             } else {
                 return new ArrayList<Loan>();
             }
+        }catch (IllegalArgumentException i){
+            throw new IllegalArgumentException("Los parametros de paginación no son correctos");
+        }
 
     }
 
@@ -70,6 +80,7 @@ public class LoanService implements ILoanService {
      * @return el id del préstamo creado y el calculo de la cuota
      */
     public LoanOutput postLoan(LoanInput request){
+
         float rate = 0;
         User user = userRepository.findById(request.getUserId()).orElse(null);
         user.setCant(user.getCant() + 1);

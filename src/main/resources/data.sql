@@ -1,10 +1,10 @@
-INSERT INTO user(name,target,cant,amount_total) VALUES('Robert','New',1,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Carlos','New',0,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Camilo','New',6,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Eliana','New',0,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('David','New',0,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Sebastian','New',0,0);
-INSERT INTO user(name,target,cant,amount_total) VALUES('Laura','New',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Robert','NEW',1,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Carlos','NEW',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Camilo','NEW',6,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Eliana','NEW',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('David','NEW',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Sebastian','NEW',0,0);
+INSERT INTO user(name,target,cant,amount_total) VALUES('Laura','NEW',0,0);
 
 INSERT INTO loan(amount,term,user_id,balance,date) VALUES(1000,12,1,1000,'2021-08-05 02:18Z');
 

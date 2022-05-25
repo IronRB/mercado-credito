@@ -6,6 +6,7 @@ import com.mercadocredito.domain.loan.input.LoanInput;
 import com.mercadocredito.domain.loan.output.LoanOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +29,6 @@ public class LoanController {
 
     @PostMapping("/register-loan")
     @ResponseStatus(code = HttpStatus.CREATED)
-    public LoanOutput postLoan(@RequestBody LoanInput request){return iLoanService.postLoan(request);}
+    public LoanOutput postLoan(@RequestBody @Validated LoanInput request){return iLoanService.postLoan(request);}
 
 }
