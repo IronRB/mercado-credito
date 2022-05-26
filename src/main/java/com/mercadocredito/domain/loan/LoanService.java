@@ -1,15 +1,16 @@
 package com.mercadocredito.domain.loan;
 
-/**
- * Clase LoanService
- *
- * Contiene la lógica de negocio de los préstamos
- *
- * @author Robert Carmona
+/*
+  Clase LoanService
+
+  Contiene la lógica de negocio de los préstamos
+
+  @author Robert Carmona
  * @version 1.0
  */
 
 import com.mercadocredito.domain.loan.input.LoanInput;
+import com.mercadocredito.domain.loan.output.LoanDetailOutput;
 import com.mercadocredito.domain.loan.output.LoanOutput;
 import com.mercadocredito.domain.target.ITargetRepository;
 import com.mercadocredito.domain.target.Target;
@@ -21,12 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -50,7 +48,7 @@ public class LoanService implements ILoanService {
      * @return la lista de prestamos solicitada
      */
     @Override
-    public List<Loan> getLoans(String from, String to, Integer pageNo, Integer pageSize){
+    public List<LoanDetailOutput> getLoans(String from, String to, Integer pageNo, Integer pageSize){
 
         try{
             Pageable paging = PageRequest.of(pageNo-1, pageSize);
@@ -64,9 +62,26 @@ public class LoanService implements ILoanService {
             }
 
             if(pagedResult.hasContent()) {
-                return pagedResult.getContent();
+                List<Loan> loans = pagedResult.getContent();
+                List loanDetailOutputList = new ArrayList();
+                User user = null;
+                Target target = null;
+                for(Loan loan: loans){
+                    LoanDetailOutput loanDetailOutput = new LoanDetailOutput();
+                    user = userRepository.findById(loan.getUserId()).orElse(null);
+                    target = targetRepository.findByTarget(user.getTarget());
+                    loanDetailOutput.setLoanID(loan.getId());
+                    loanDetailOutput.setAmount(loan.getAmount());
+                    loanDetailOutput.setTerm(loan.getTerm());
+                    loanDetailOutput.setRate(target.getRate());
+                    loanDetailOutput.setUserId(user.getId());
+                    loanDetailOutput.setTarget(user.getTarget());
+                    loanDetailOutput.setDate(loan.getDate());
+                    loanDetailOutputList.add(loanDetailOutput);
+                }
+                return loanDetailOutputList;
             } else {
-                return new ArrayList<Loan>();
+                return new ArrayList<LoanDetailOutput>();
             }
         }catch (IllegalArgumentException i){
             throw new IllegalArgumentException("Los parametros de paginación no son correctos");
