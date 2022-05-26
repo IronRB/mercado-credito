@@ -17,7 +17,7 @@ public class Calendar {
      */
     public static String getDateTimeNowISO8601(){
         Date now = new Date();
-        SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+        SimpleDateFormat isoDate = new SimpleDateFormat("yyyy-MM-dd HH:mm'Z'");
         return isoDate.format(now);
     }
 }
