@@ -102,7 +102,8 @@ public class LoanService implements ILoanService {
         user.setAmountTotal(user.getAmountTotal() + request.getAmount());
         List<Target> targets = targetRepository.findAll();
         for (Target target: targets) {
-            if(user.getCant() >= target.getCantMin() && user.getCant() <= target.getCantMax())
+            if(user.getCant() >= target.getCantMin() && user.getCant() <= target.getCantMax()
+                || user.getAmountTotal() >= target.getAmountTotalMin() && user.getAmountTotal() <= target.getAmountTotalMax())
             {
                 user.setTarget(target.getTarget());
                 rate = target.getRate();
