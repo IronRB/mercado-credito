@@ -3,6 +3,10 @@ package com.mercadocredito.domain.payment.output;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+/**
+ * Clase PaymentOutput
+ * Modelo usado para el mensaje de salida cuando se crea un pago
+ */
 @Data
 @AllArgsConstructor
 public class PaymentOutput {

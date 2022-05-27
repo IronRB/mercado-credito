@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
+/**
+ * Clase PaymentController
+ * Contiene los metodos que exponen los endpoints para crear un pago y consultar el total de la deuda
+ */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin

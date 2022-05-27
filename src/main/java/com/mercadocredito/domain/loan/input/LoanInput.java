@@ -8,6 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+/**
+ * Clase LoanInput
+ * Usada como modelo del mensaje de entrada de un prestamo
+ */
 @Data
 @AllArgsConstructor
 public class LoanInput {

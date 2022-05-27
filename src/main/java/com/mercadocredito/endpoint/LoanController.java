@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Clase LoanController
+ * Contiene los metodos que exponen los endpoints para obtener la lista de prestamos y crear un prestamo
+ */
 @RestController
 @RequestMapping("/api")
 @CrossOrigin

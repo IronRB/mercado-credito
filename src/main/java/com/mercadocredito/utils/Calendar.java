@@ -1,6 +1,6 @@
 package com.mercadocredito.utils;
 /**
- * Clase Calendar
+ * Class Calendar
  *
  * Contiene metodos para obtener elementos relacionados con fechas y horas
  *

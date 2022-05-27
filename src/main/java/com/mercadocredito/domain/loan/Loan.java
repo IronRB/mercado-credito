@@ -5,8 +5,12 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
 
+/**
+ * Clase Loan
+ *
+ * Entidad prestamo
+ */
 @Data
 @Entity
 @NoArgsConstructor
@@ -19,6 +23,8 @@ public class Loan implements Serializable {
     private int term;
     private long userId;
     private float balance;
+    private float rate;
+    private String target;
 
     @Column(name="date")
     private String date;
