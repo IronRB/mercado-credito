@@ -34,27 +34,34 @@ public class PaymentService implements IPaymentService{
      * @param loanId codigo único que identifica el préstamo
      * @param paymentInput mensaje de entrada que contiene el valor del monto del pago
      * @return un pago creado
+     * @throws IllegalArgumentException si se ingresa algún parametro invalido
+     * @throws ResourceNotFoundException si se no se encuentra algún registro
      */
     @Override
     public PaymentOutput postPayment(long loanId, PaymentInput paymentInput) {
-        Loan loan = iLoanRepository.findById(loanId).orElse(null);
-        if (null != loan){
-            if(paymentInput.getAmount()<=loan.getBalance()){
-                loan.setBalance(loan.getBalance()-paymentInput.getAmount());
-                iLoanRepository.save(loan);
-                Payment payment = new Payment();
-                payment.setLoanId(loanId);
-                payment.setDebt(loan.getBalance());
-                payment.setAmount(paymentInput.getAmount());
-                payment.setDate(Calendar.getDateTimeNowISO8601());
-                iPaymentRepository.save(payment);
-                return new PaymentOutput(payment.getId(),payment.getLoanId(),payment.getDebt());
+        try{
+            Loan loan = iLoanRepository.findById(loanId).orElse(null);
+            if (null != loan){
+                if(paymentInput.getAmount()<=loan.getBalance() && paymentInput.getAmount()>0){
+                    loan.setBalance(loan.getBalance()-paymentInput.getAmount());
+                    iLoanRepository.save(loan);
+                    Payment payment = new Payment();
+                    payment.setLoanId(loanId);
+                    payment.setDebt(loan.getBalance());
+                    payment.setAmount(paymentInput.getAmount());
+                    payment.setDate(Calendar.getDateTimeNowISO8601());
+                    iPaymentRepository.save(payment);
+                    return new PaymentOutput(payment.getId(),payment.getLoanId(),payment.getDebt());
+                }else{
+                    throw new IllegalArgumentException("El valor del monto no es correcto");
+                }
             }else{
-                throw new ResourceNotFoundException(400,"El valor del monto no es correcto");
+                throw new ResourceNotFoundException(404,"El prestamo no se encuentra registrado");
             }
-        }else{
-            throw new ResourceNotFoundException(404,"El prestamo no se encuentra registrado");
+        }catch (NumberFormatException e){
+            throw new IllegalArgumentException("El formato de monto no es correcto");
         }
+
     }
 
     /**
