@@ -64,18 +64,14 @@ public class LoanService implements ILoanService {
             if(pagedResult.hasContent()) {
                 List<Loan> loans = pagedResult.getContent();
                 List loanDetailOutputList = new ArrayList();
-                User user = null;
-                Target target = null;
                 for(Loan loan: loans){
                     LoanDetailOutput loanDetailOutput = new LoanDetailOutput();
-                    user = userRepository.findById(loan.getUserId()).orElse(null);
-                    target = targetRepository.findByTarget(user.getTarget());
                     loanDetailOutput.setLoanID(loan.getId());
                     loanDetailOutput.setAmount(loan.getAmount());
                     loanDetailOutput.setTerm(loan.getTerm());
-                    loanDetailOutput.setRate(target.getRate());
-                    loanDetailOutput.setUserId(user.getId());
-                    loanDetailOutput.setTarget(user.getTarget());
+                    loanDetailOutput.setRate(loan.getRate());
+                    loanDetailOutput.setUserId(loan.getUserId());
+                    loanDetailOutput.setTarget(loan.getTarget());
                     loanDetailOutput.setDate(loan.getDate());
                     loanDetailOutputList.add(loanDetailOutput);
                 }
@@ -121,7 +117,8 @@ public class LoanService implements ILoanService {
 
         loanRepository.save(loan);
 
-        LoanOutput loanOutput = new LoanOutput((int)loan.getId(),ArithmeticOperation.calculateInstallment(rate/12,request.getTerm(),request.getAmount()));
+        LoanOutput loanOutput = new LoanOutput((int)loan.getId(),
+                ArithmeticOperation.calculateInstallment(rate/12,request.getTerm(),request.getAmount()));
         return loanOutput;
     }
 
