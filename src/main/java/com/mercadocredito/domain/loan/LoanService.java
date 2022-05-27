@@ -16,6 +16,7 @@ import com.mercadocredito.domain.target.ITargetRepository;
 import com.mercadocredito.domain.target.Target;
 import com.mercadocredito.domain.user.User;
 import com.mercadocredito.domain.user.UserRepository;
+import com.mercadocredito.exception.ResourceNotFoundException;
 import com.mercadocredito.utils.ArithmeticOperation;
 import com.mercadocredito.utils.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +54,7 @@ public class LoanService implements ILoanService {
         try{
             Pageable paging = PageRequest.of(pageNo-1, pageSize);
 
-            Page<Loan> pagedResult = null;
+            Page<Loan> pagedResult;
 
             if(from != null && to != null){
                 pagedResult = loanRepository.findByDateBetween(paging,from,to);
@@ -66,7 +67,7 @@ public class LoanService implements ILoanService {
                 List loanDetailOutputList = new ArrayList();
                 for(Loan loan: loans){
                     LoanDetailOutput loanDetailOutput = new LoanDetailOutput();
-                    loanDetailOutput.setLoanID(loan.getId());
+                    loanDetailOutput.setId(loan.getId());
                     loanDetailOutput.setAmount(loan.getAmount());
                     loanDetailOutput.setTerm(loan.getTerm());
                     loanDetailOutput.setRate(loan.getRate());
@@ -77,7 +78,7 @@ public class LoanService implements ILoanService {
                 }
                 return loanDetailOutputList;
             } else {
-                return new ArrayList<LoanDetailOutput>();
+                return new ArrayList<>();
             }
         }catch (IllegalArgumentException i){
             throw new IllegalArgumentException("Los parametros de paginación no son correctos");
@@ -91,35 +92,43 @@ public class LoanService implements ILoanService {
      * @return el id del préstamo creado y el calculo de la cuota
      */
     public LoanOutput postLoan(LoanInput request){
+        try{
+            float rate = 0;
+            User user = userRepository.findById(request.getUserId()).orElse(null);
+            if(null != user){
+                user.setCant(user.getCant() + 1);
+                user.setAmountTotal(user.getAmountTotal() + request.getAmount());
+                List<Target> targets = targetRepository.findAll();
+                for (Target target: targets) {
+                    if(user.getCant() >= target.getCantMin() && user.getCant() <= target.getCantMax()
+                            || user.getAmountTotal() >= target.getAmountTotalMin() && user.getAmountTotal() <= target.getAmountTotalMax())
+                    {
+                        user.setTarget(target.getTarget());
+                        rate = target.getRate();
+                    }
+                }
+                userRepository.save(user);
+                Loan loan = new Loan();
+                loan.setAmount(request.getAmount());
+                loan.setTerm(request.getTerm());
+                loan.setUserId(user.getId());
+                loan.setBalance(request.getAmount());
+                loan.setDate(Calendar.getDateTimeNowISO8601());
+                loan.setRate(rate);
+                loan.setTarget(user.getTarget());
 
-        float rate = 0;
-        User user = userRepository.findById(request.getUserId()).orElse(null);
-        user.setCant(user.getCant() + 1);
-        user.setAmountTotal(user.getAmountTotal() + request.getAmount());
-        List<Target> targets = targetRepository.findAll();
-        for (Target target: targets) {
-            if(user.getCant() >= target.getCantMin() && user.getCant() <= target.getCantMax()
-                || user.getAmountTotal() >= target.getAmountTotalMin() && user.getAmountTotal() <= target.getAmountTotalMax())
-            {
-                user.setTarget(target.getTarget());
-                rate = target.getRate();
+                loanRepository.save(loan);
+
+                return new LoanOutput((int)loan.getId(),
+                        ArithmeticOperation.calculateInstallment(rate/12,request.getTerm(),request.getAmount()));
+            }else {
+                throw new ResourceNotFoundException(404,"El usuario no se encuentra registrado");
             }
+
+        }catch (ResourceNotFoundException e){
+            throw new ResourceNotFoundException(404,e.getMessage());
         }
-        userRepository.save(user);
-        Loan loan = new Loan();
-        loan.setAmount(request.getAmount());
-        loan.setTerm(request.getTerm());
-        loan.setUserId(user.getId());
-        loan.setBalance(request.getAmount());
-        loan.setDate(Calendar.getDateTimeNowISO8601());
-        loan.setRate(rate);
-        loan.setTarget(user.getTarget());
 
-        loanRepository.save(loan);
-
-        LoanOutput loanOutput = new LoanOutput((int)loan.getId(),
-                ArithmeticOperation.calculateInstallment(rate/12,request.getTerm(),request.getAmount()));
-        return loanOutput;
     }
 
 }

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class LoanDetailOutput {
-    private long loanID;
+    private long id;
     private float amount;
     private int term;
     private float rate;
