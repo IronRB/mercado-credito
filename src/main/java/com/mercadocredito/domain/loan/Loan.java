@@ -19,6 +19,8 @@ public class Loan implements Serializable {
     private int term;
     private long userId;
     private float balance;
+    private float rate;
+    private String target;
 
     @Column(name="date")
     private String date;

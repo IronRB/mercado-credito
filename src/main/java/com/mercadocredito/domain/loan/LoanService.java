@@ -116,6 +116,8 @@ public class LoanService implements ILoanService {
         loan.setUserId(user.getId());
         loan.setBalance(request.getAmount());
         loan.setDate(Calendar.getDateTimeNowISO8601());
+        loan.setRate(rate);
+        loan.setTarget(user.getTarget());
 
         loanRepository.save(loan);
 
