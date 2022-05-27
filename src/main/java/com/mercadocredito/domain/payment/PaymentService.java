@@ -14,6 +14,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Clase PaymentService
+ * Contiene la lógica de negocio de los pagos
+ */
 @Service
 public class PaymentService implements IPaymentService{
 

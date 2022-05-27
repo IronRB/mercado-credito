@@ -1,11 +1,11 @@
 package com.mercadocredito.domain.loan;
 
-/*
-  Clase LoanService
-
-  Contiene la lógica de negocio de los préstamos
-
-  @author Robert Carmona
+/**
+ * Clase LoanService
+ * Contiene la lógica de negocio de los préstamos
+ *
+ *
+ *@author Robert Carmona
  * @version 1.0
  */
 

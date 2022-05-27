@@ -8,6 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.io.Serializable;
 
+/**
+ * Clase Target
+ * Entidad Target
+ */
 @Data
 @Entity
 public class Target implements Serializable {

@@ -6,6 +6,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Clase Payment
+ * Entidad Pago
+ */
 @Data
 @Entity
 @NoArgsConstructor

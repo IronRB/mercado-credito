@@ -1,10 +1,10 @@
 package com.mercadocredito.utils;
-/*
-  Class Calendar
-
-  Contiene metodos para obtener elementos relacionados con fechas y horas
-
-  @author Robert Carmona
+/**
+ * Class Calendar
+ *
+ * Contiene metodos para obtener elementos relacionados con fechas y horas
+ *
+ * @author Robert Carmona
  * @version 1.0
  */
 import java.text.SimpleDateFormat;

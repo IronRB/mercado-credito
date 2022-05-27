@@ -9,6 +9,10 @@ import javax.persistence.Id;
 
 import java.io.Serializable;
 
+/**
+ * Clase User
+ * Entidad Usuario
+ */
 @Data
 @Entity
 public class User implements Serializable {
