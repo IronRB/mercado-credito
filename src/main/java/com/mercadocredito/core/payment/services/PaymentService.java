@@ -7,7 +7,6 @@ import com.mercadocredito.core.payment.domain.input.PaymentInput;
 import com.mercadocredito.core.payment.domain.output.DebtOutput;
 import com.mercadocredito.core.payment.domain.output.PaymentOutput;
 import com.mercadocredito.core.payment.repository.IPaymentRepository;
-import com.mercadocredito.core.user.domain.User;
 import com.mercadocredito.core.user.repository.UserRepository;
 import com.mercadocredito.exceptions.ResourceNotFoundException;
 import com.mercadocredito.utils.Calendar;
@@ -109,9 +108,8 @@ public class PaymentService implements IPaymentService {
         List<Payment> payment;
         DebtOutput debtOutput;
         if(date != null || target != null){
-            List<Loan> loans;
+            List<Loan> loans = iLoanRepository.findAll();
             if(date != null && target == null){
-                loans = iLoanRepository.findAll();
                 for(Loan loan: loans){
                     payment = iPaymentRepository.findByDateLessThanEqual(date);
                     if(payment.size() != 0){
@@ -121,13 +119,10 @@ public class PaymentService implements IPaymentService {
                     }
                 }
             }else {
-                List<User> users = userRepository.findByTarget(target);
-                if(users.size() != 0){
-                    for(User user: users){
-                        loans = iLoanRepository.findByUserId(user.getId());
-                        for(Loan loan: loans){
-                            balances += loan.getBalance();
-                        }
+                loans = iLoanRepository.findByTarget(target);
+                if(loans.size() != 0){
+                    for(Loan loan: loans){
+                        balances += loan.getBalance();
                     }
                 }else{
                     throw new ResourceNotFoundException(404,"No hay registros con el target enviado");

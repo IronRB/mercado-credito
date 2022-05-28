@@ -28,7 +28,7 @@ public class LoanController {
             @RequestParam(required = false) String to,
             @RequestParam(defaultValue = "1") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize){
-        return (List<LoanDetailOutput>) iLoanService.getLoans(from,to,pageNo,pageSize);
+        return iLoanService.getLoans(from,to,pageNo,pageSize);
     }
 
     @PostMapping("/register-loan")

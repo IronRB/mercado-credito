@@ -30,4 +30,11 @@ public interface ILoanRepository extends JpaRepository<Loan,Long> {
      * @return la lista de prestamos creados en un rango de fechas
      */
     Page<Loan> findByDateBetween(Pageable paging,String from, String to);
+
+    /**
+     * Metodo que permite consultar la lista de los usuarios por target
+     * @param target Target que se desea consutlar
+     * @return la lista de usuarios que tiene un target especifico
+     */
+    List<Loan> findByTarget(String target);
 }

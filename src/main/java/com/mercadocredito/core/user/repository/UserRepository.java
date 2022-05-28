@@ -13,10 +13,4 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
 
-    /**
-     * Metodo que permite consultar la lista de los usuarios por target
-     * @param target Target que se desea consutlar
-     * @return la lista de usuarios que tiene un target especifico
-     */
-    List<User> findByTarget(String target);
 }
