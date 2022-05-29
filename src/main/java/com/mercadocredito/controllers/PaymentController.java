@@ -1,9 +1,12 @@
 package com.mercadocredito.controllers;
 
+import com.mercadocredito.core.loan.repository.ILoanRepository;
+import com.mercadocredito.core.payment.repository.IPaymentRepository;
 import com.mercadocredito.core.payment.services.IPaymentService;
 import com.mercadocredito.core.payment.domain.input.PaymentInput;
 import com.mercadocredito.core.payment.domain.output.DebtOutput;
 import com.mercadocredito.core.payment.domain.output.PaymentOutput;
+import com.mercadocredito.core.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,10 @@ public class PaymentController {
 
     @Autowired
     private IPaymentService iPaymentService;
+
+    public PaymentController(IPaymentService iPaymentService) {
+        this.iPaymentService = iPaymentService;
+    }
 
     @PostMapping("/payment/{loanId}")
     @ResponseStatus(code = HttpStatus.CREATED)

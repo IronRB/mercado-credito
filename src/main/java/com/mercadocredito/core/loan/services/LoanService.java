@@ -14,8 +14,8 @@ import com.mercadocredito.core.loan.domain.input.LoanInput;
 import com.mercadocredito.core.loan.domain.output.LoanDetailOutput;
 import com.mercadocredito.core.loan.domain.output.LoanOutput;
 import com.mercadocredito.core.loan.repository.ILoanRepository;
-import com.mercadocredito.core.target.repository.ITargetRepository;
 import com.mercadocredito.core.target.domain.Target;
+import com.mercadocredito.core.target.repository.ITargetRepository;
 import com.mercadocredito.core.user.domain.User;
 import com.mercadocredito.core.user.repository.UserRepository;
 import com.mercadocredito.exceptions.ResourceNotFoundException;
@@ -41,6 +41,12 @@ public class LoanService implements ILoanService {
 
     @Autowired
     private ITargetRepository targetRepository;
+
+    public LoanService(ILoanRepository loanRepository,UserRepository userRepository,ITargetRepository targetRepository) {
+        this.userRepository = userRepository;
+        this.loanRepository = loanRepository;
+        this.targetRepository = targetRepository;
+    }
 
     /**
      * Obtiene la lista de prestamos filtrando por fecha y realiza paginación

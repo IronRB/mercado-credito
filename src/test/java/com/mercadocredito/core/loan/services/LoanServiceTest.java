@@ -1,10 +1,10 @@
-package com.mercadocredito.controllers;
+package com.mercadocredito.core.loan.services;
 
 import com.mercadocredito.core.loan.domain.Loan;
 import com.mercadocredito.core.loan.domain.output.LoanDetailOutput;
 import com.mercadocredito.core.loan.repository.ILoanRepository;
-import com.mercadocredito.core.loan.services.ILoanService;
-import com.mercadocredito.core.loan.services.LoanService;
+import com.mercadocredito.core.target.repository.ITargetRepository;
+import com.mercadocredito.core.user.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,17 +18,21 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
-class LoanControllerTest {
+import static org.junit.jupiter.api.Assertions.*;
+
+class LoanServiceTest {
 
     @Autowired
-    ILoanRepository loanRepositoryMock = Mockito.mock(ILoanRepository.class);
+    private ILoanRepository loanRepositoryMock = Mockito.mock(ILoanRepository.class);
 
     @Autowired
-    private static ILoanService iLoanService;
-
+    private UserRepository userRepositoryMock= Mockito.mock(UserRepository.class);
 
     @Autowired
-    LoanController loanController = new LoanController(iLoanService);
+    private ITargetRepository targetRepositoryMock = Mockito.mock(ITargetRepository.class);
+
+    @Autowired
+    LoanService loanService = new LoanService(loanRepositoryMock,userRepositoryMock,targetRepositoryMock);
 
     List loanDetailOutputList = new ArrayList();
 
@@ -53,16 +57,12 @@ class LoanControllerTest {
 
     @Test
     void getLoans() {
-        iLoanService.getLoans("2021-08-05 02:18Z","2021-08-05 02:18Z",0,10);
-        Pageable paging = PageRequest.of(0, 10);
         List<LoanDetailOutput> serviceResponse;
-        serviceResponse = LoanController.getLoans("2021-08-05 02:18Z","2021-08-05 02:18Z",0,10);
+        serviceResponse = loanService.getLoans("2021-08-05 02:18Z","2021-08-05 02:18Z",1,10);
         Assertions.assertEquals(loanDetailOutputList,serviceResponse);
     }
 
     @Test
     void postLoan() {
-        System.out.println("Durante de la prueba post");
     }
-
 }

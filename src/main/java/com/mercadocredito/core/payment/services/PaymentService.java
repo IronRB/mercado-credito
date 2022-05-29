@@ -28,9 +28,6 @@ public class PaymentService implements IPaymentService {
     @Autowired
     private IPaymentRepository iPaymentRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     /**
      * @param loanId codigo único que identifica el préstamo
      * @param paymentInput mensaje de entrada que contiene el valor del monto del pago
