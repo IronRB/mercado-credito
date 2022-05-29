@@ -44,7 +44,7 @@ class PaymentControllerTest {
 
     @BeforeEach
     void setUp() {
-        /*Loan mockLoan = new Loan();
+        Loan mockLoan = new Loan();
         mockLoan.setId(1);
         mockLoan.setAmount(1000);
         mockLoan.setTerm(12);
@@ -54,8 +54,7 @@ class PaymentControllerTest {
         mockLoan.setTarget("NEW");
         mockLoan.setDate("2021-08-05 02:18Z");
 
-        when(iLoanRepository.findById((long)1).orElse(null)).thenReturn(mockLoan);
-        //doReturn(mockLoan).when(iLoanRepository).findById((long)1).orElse(null);*/
+        when(iLoanRepository.findById((long)1)).thenReturn(Optional.of(mockLoan));
     }
 
     @Test
