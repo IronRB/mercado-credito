@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,8 +38,8 @@ class LoanControllerTest {
     @Autowired
     LoanController loanController = new LoanController(iLoanService);
 
-    @BeforeEach
-    void setUp() {
+    @Test
+    void getLoans() {
         Loan mockLoan = new Loan();
         List loanDetailOutputList = new ArrayList();
         mockLoan.setId(1);
@@ -51,13 +52,13 @@ class LoanControllerTest {
         mockLoan.setDate("2021-08-05 02:18Z");
         loanDetailOutputList.add(mockLoan);
 
-        when(iLoanRepository.findAll()).thenReturn(loanDetailOutputList);
-    }
+        Pageable paging = PageRequest.of(0, 10);
+        Page<Loan> pagedResult = new PageImpl<>(loanDetailOutputList);;
 
-    @Test
-    void getLoans() {
+        when(iLoanRepository.findAll(paging)).thenReturn(pagedResult);
+
         List<LoanDetailOutput> serviceResponse;
-        serviceResponse = loanController.getLoans(null,null,0,10);
+        serviceResponse = loanController.getLoans(null,null,1,10);
         Assertions.assertEquals(1,serviceResponse.size());
     }
 
