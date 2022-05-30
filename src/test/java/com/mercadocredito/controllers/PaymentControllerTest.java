@@ -1,7 +1,6 @@
 package com.mercadocredito.controllers;
 
 import com.mercadocredito.core.loan.domain.Loan;
-import com.mercadocredito.core.loan.domain.output.LoanOutput;
 import com.mercadocredito.core.loan.repository.ILoanRepository;
 import com.mercadocredito.core.payment.domain.Payment;
 import com.mercadocredito.core.payment.domain.input.PaymentInput;
@@ -9,22 +8,18 @@ import com.mercadocredito.core.payment.domain.output.DebtOutput;
 import com.mercadocredito.core.payment.domain.output.PaymentOutput;
 import com.mercadocredito.core.payment.repository.IPaymentRepository;
 import com.mercadocredito.core.payment.services.IPaymentService;
-import com.mercadocredito.core.user.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
@@ -72,12 +67,6 @@ class PaymentControllerTest {
 
     @Test
     void postPaymentWithAmountEqualsBalance() {
-        Payment mockPayment = new Payment();
-        mockPayment.setId(2);
-        mockPayment.setAmount(1000);
-        mockPayment.setLoanId(2);
-        mockPayment.setDebt((float)913.3936);
-
         PaymentOutput serviceResponse;
         PaymentInput paymentOutput = new PaymentInput((float)1000);
         serviceResponse = paymentController.postPayment(1,paymentOutput);
@@ -92,6 +81,10 @@ class PaymentControllerTest {
     }
 
     @Test
-    void getTotalBalance() {
+    void getTotalBalanceWithDate() {
+        DebtOutput serviceResponse;
+        serviceResponse = paymentController.getTotalBalance("2022-05-28 12:51Z",null);
+        Assertions.assertEquals(0.0,serviceResponse.getBalance());
     }
+
 }
