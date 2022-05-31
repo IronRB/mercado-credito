@@ -24,7 +24,7 @@ Este repositorio fue creado con el objetivo de resolver Challenge Back-End Merca
 
 Descripción del challenge:
 
-    
+https://github.com/IronRB/mercado-credito/blob/feature/RobertC/Challenge%20Back-End%20Practico.pdf
 
 Documentación Javadocs:
     
@@ -117,7 +117,7 @@ La segunda forma,es usando un GitHub Action, el cual se creó con la finalidad d
 
     \.github\workflows\azure-webapps-java-jar.yml
 
-
+<a name="Construido-con"></a>
 ## Construido con 🛠️
 
 * IDE: Intellij IntelliJ IDEA 2022.1.1 (Community Edition)
