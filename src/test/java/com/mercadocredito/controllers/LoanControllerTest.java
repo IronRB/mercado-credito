@@ -63,10 +63,66 @@ class LoanControllerTest {
     }
 
     @Test
+    void getLoansValidAmount() {
+        Loan mockLoan = new Loan();
+        List loanDetailOutputList = new ArrayList();
+        mockLoan.setId(1);
+        mockLoan.setAmount(1000);
+        mockLoan.setTerm(12);
+        mockLoan.setRate((float)0.15);
+        mockLoan.setUserId(1);
+        mockLoan.setBalance(1000);
+        mockLoan.setTarget("NEW");
+        mockLoan.setDate("2021-08-05 02:18Z");
+        loanDetailOutputList.add(mockLoan);
+
+        Pageable paging = PageRequest.of(0, 10);
+        Page<Loan> pagedResult = new PageImpl<>(loanDetailOutputList);;
+
+        when(iLoanRepository.findAll(paging)).thenReturn(pagedResult);
+
+        List<LoanDetailOutput> serviceResponse;
+        serviceResponse = loanController.getLoans(null,null,1,10);
+        Assertions.assertEquals(mockLoan.getAmount(),serviceResponse.get(0).getAmount());
+    }
+
+    @Test
+    void getLoansValidTarget() {
+        Loan mockLoan = new Loan();
+        List loanDetailOutputList = new ArrayList();
+        mockLoan.setId(1);
+        mockLoan.setAmount(1000);
+        mockLoan.setTerm(12);
+        mockLoan.setRate((float)0.15);
+        mockLoan.setUserId(1);
+        mockLoan.setBalance(1000);
+        mockLoan.setTarget("NEW");
+        mockLoan.setDate("2021-08-05 02:18Z");
+        loanDetailOutputList.add(mockLoan);
+
+        Pageable paging = PageRequest.of(0, 10);
+        Page<Loan> pagedResult = new PageImpl<>(loanDetailOutputList);;
+
+        when(iLoanRepository.findAll(paging)).thenReturn(pagedResult);
+
+        List<LoanDetailOutput> serviceResponse;
+        serviceResponse = loanController.getLoans(null,null,1,10);
+        Assertions.assertEquals(mockLoan.getTarget(),serviceResponse.get(0).getTarget());
+    }
+
+    @Test
     void postLoan() {
         LoanInput request = new LoanInput(1000,12,1);
         LoanOutput serviceResponse;
         serviceResponse = loanController.postLoan(request);
         Assertions.assertEquals(87.91588592529297,serviceResponse.getInstallment());
+    }
+
+    @Test
+    void postLoanValidId() {
+        LoanInput request = new LoanInput(1000,12,1);
+        LoanOutput serviceResponse;
+        serviceResponse = loanController.postLoan(request);
+        Assertions.assertEquals(0,serviceResponse.getLoanID());
     }
 }
