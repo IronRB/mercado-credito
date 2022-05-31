@@ -22,6 +22,10 @@ Este repositorio fue creado con el objetivo de resolver Challenge Back-End Merca
 
 ## Comenzando 🚀
 
+Descripción del challenge:
+
+    
+
 Documentación Javadocs:
     
     /docs/index.html
@@ -34,11 +38,17 @@ https://documenter.getpostman.com/view/10296139/Uz5Dox2H
 
 Para realizar la instalación en ambiente local:
 
-$ git clone https://github.com/IronRB/mercado-credito.git
+Clonar el proyecto:
 
-$ mvn clean install
+    $ git clone https://github.com/IronRB/mercado-credito.git
 
-$ mvn clean package
+Instalación del proyecto:
+
+    $ mvn clean install
+
+Empaquetar el proyecto:
+
+    $ mvn clean package
 
 ### Ejecución
 
@@ -46,19 +56,23 @@ Luego para realizar la ejecución del proyecto, hay 2 opciones:
 
 * Ejecución del jarfile del proyecto
 
-    $ cd .\target\
+    Ir a la ruta target:
 
-    $  java -jar challenge-0.0.1-SNAPSHOT.jar --server.port=8080
+        $ cd .\target\
+
+    Ejecución del Jarfile
+
+        $  java -jar challenge-0.0.1-SNAPSHOT.jar --server.port=8080
 
 * Ejecución del dockerfile del proyecto
 
     Primero, crear la imagen docker:
 
-    $ docker build --tag=challenge:latest .
+        $ docker build --tag=challenge:latest .
 
     Luego, crear un contenedor apartir de la imagen creada anteriormente, ademas indicar que debe correr en el puerto 8080
 
-    $ docker run -p8080:8080 challenge:latest
+        $ docker run -p8080:8080 challenge:latest
 
 ## Ejecutando las pruebas ⚙️
 
