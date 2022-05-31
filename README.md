@@ -9,9 +9,11 @@ Este repositorio fue creado con el objetivo de resolver Challenge Back-End Merca
 5. [Despliegue ](#Despliegue)
 6. [Construido con](#Construido-con)
 
+<a name="Información-General"></a>
 ## Información General 📖
 ***
 
+<a name="Pre-requisitos"></a>
 ## Pre-requisitos 🔧
 ***
 * Java 11
@@ -20,7 +22,10 @@ Este repositorio fue creado con el objetivo de resolver Challenge Back-End Merca
 * Git
 * Maven
 
+<a name="Comenzando"></a>
 ## Comenzando 🚀
+
+A continuación algunos links para tener contexto de la solución:
 
 Descripción del challenge:
 
@@ -74,6 +79,7 @@ Luego para realizar la ejecución del proyecto, hay 2 opciones:
 
         $ docker run -p8080:8080 challenge:latest
 
+<a name="Ejecutando-las-pruebas"></a>
 ## Ejecutando las pruebas ⚙️
 
 Ejecución de pruebas unitarias:
@@ -93,7 +99,7 @@ Para realizar evaluación de los endpoints realizando solicitudes HTTP, importar
 
     $ cd .\testing\
 
-
+<a name="Despliegue"></a>
 ## Despliegue 📦
 
 Para realizar el despligue en azure, se realizó con 2 alternativas:
@@ -120,18 +126,19 @@ La segunda forma,es usando un GitHub Action, el cual se creó con la finalidad d
 <a name="Construido-con"></a>
 ## Construido con 🛠️
 
-* IDE: Intellij IntelliJ IDEA 2022.1.1 (Community Edition)
-* Lenguaje de programación: Java versión 11
-* Framework de desarollo web: Spring Boot
-* Framework para realizar pruebas unitarias: Junit
-* Framework para mockear datos: Mockito
-* Framework para generar reportes de cobertuta de codigo: Jacoco
-* Software para testear la solución: Postman
-* Base de datos: H2 database
-* Servicio cloud usado para despliegue: Azure APP services
-* Plataforma de repositorios: GitHub
-* Herramienta para realizar despliegue automatico: GitHub Actions
-* Herramienta para crear contenedor de la aplicación: Docker
-* Administrador de dependencias: Maven
-
-
+| Nombre de tecnología | Descripción          |
+| -------------------- | -------------------- |
+| Intellij IntelliJ IDEA 2022.1.1 (Community Edition) | IDE de desarrollo |
+| Java versión 11      | Lenguaje de programación | 
+| Spring Boot | Framework de desarollo web |
+| Junit      | Framework para realizar pruebas unitarias | 
+| Mockito | Framework para mockear datos |
+| Jacoco      | Framework para generar reportes de cobertuta de codigo | 
+| Postman | Software para testear la solución |
+| H2 database      | Base de datos | 
+| Azure APP services | Servicio cloud usado para despliegue |
+| GitHub      | Plataforma de repositorios | 
+| Azure APP services | Servicio cloud usado para despliegue |
+| GitHub Actions     | Herramienta para realizar despliegue automatico | 
+| Docker | Herramienta para crear contenedor de la aplicación |
+| Maven | Administrador de dependencias |
