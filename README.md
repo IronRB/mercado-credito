@@ -22,6 +22,10 @@ Tiene 5 endpoints:
 * GET Get-Balance: Obtener la deuda.
 * GET Get-Total-Balance: Obtener el total de la deuda.
 
+Ademas, se realiza despliegue automatico en el servicio cloud Azure APP services por medio un pipeline como codigo y un GitHub Action que permite que cada que se realize un pull request se ejecute el pipeline.
+
+Tambien se cuenta con documentación Javadocs y documentación de las peticiones en Postman.
+
 Vista general del proyecto:
 
 ![Proyecto](/img/Estructura-proyecto.JPG)
