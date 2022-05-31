@@ -66,11 +66,46 @@ class PaymentControllerTest {
     }
 
     @Test
+    void postPaymentValidLoanId() {
+        Payment mockPayment = new Payment();
+        mockPayment.setId(1);
+        mockPayment.setAmount(1000);
+        mockPayment.setLoanId(1);
+        mockPayment.setDebt((float)913.3936);
+        PaymentOutput serviceResponse;
+        PaymentInput paymentOutput = new PaymentInput((float)86.60638);
+        serviceResponse = paymentController.postPayment(1,paymentOutput);
+        Assertions.assertEquals(mockPayment.getLoanId(),serviceResponse.getLoanId());
+    }
+
+    @Test
     void postPaymentWithAmountEqualsBalance() {
         PaymentOutput serviceResponse;
         PaymentInput paymentOutput = new PaymentInput((float)1000);
         serviceResponse = paymentController.postPayment(1,paymentOutput);
         Assertions.assertEquals(0,serviceResponse.getDebt());
+    }
+
+    @Test
+    void postPaymentWithAmountMayor() {
+        try{
+            PaymentOutput serviceResponse;
+            PaymentInput paymentOutput = new PaymentInput((float)1500);
+            serviceResponse = paymentController.postPayment(1,paymentOutput);
+        }catch (Exception e){
+            Assertions.assertEquals("El valor del monto no es correcto",e.getMessage());
+        }
+    }
+
+    @Test
+    void postPaymentWithLoanNotExist() {
+        try{
+            PaymentOutput serviceResponse;
+            PaymentInput paymentOutput = new PaymentInput((float)1000);
+            serviceResponse = paymentController.postPayment(3,paymentOutput);
+        }catch (Exception e){
+            Assertions.assertEquals("El prestamo no se encuentra registrado",e.getMessage());
+        }
     }
 
     @Test
@@ -81,10 +116,46 @@ class PaymentControllerTest {
     }
 
     @Test
+    void getBalanceLoanNotExist() {
+        try{
+            paymentController.getBalance((long)5,"2022-05-28 12:51Z");
+        }catch (Exception e){
+            Assertions.assertEquals("No existen registros asociados al prestamo consultado",e.getMessage());
+        }
+    }
+
+    @Test
+    void getBalanceLoanNull() {
+        try{
+            paymentController.getBalance(null,"2022-05-28 12:51Z");
+        }catch (Exception e){
+            Assertions.assertEquals("El id del prestamo no es correcto",e.getMessage());
+        }
+    }
+
+    @Test
+    void getBalanceParameterInputNull() {
+        try{
+            paymentController.getBalance(null,null);
+        }catch (Exception e){
+            Assertions.assertEquals("No se enviaron parametros para realizar la consulta",e.getMessage());
+        }
+    }
+
+    @Test
     void getTotalBalanceWithDate() {
         DebtOutput serviceResponse;
         serviceResponse = paymentController.getTotalBalance("2022-05-28 12:51Z",null);
         Assertions.assertEquals(0.0,serviceResponse.getBalance());
+    }
+
+    @Test
+    void getTotalBalanceParameterInputNull() {
+        try{
+            paymentController.getTotalBalance(null,null);
+        }catch(Exception e){
+            Assertions.assertEquals("No se enviaron parametros para realizar la consulta",e.getMessage());
+        }
     }
 
 }

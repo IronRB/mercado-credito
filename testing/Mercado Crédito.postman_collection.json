@@ -1,0 +1,364 @@
+{
+	"info": {
+		"_postman_id": "c75e000e-9a1b-4cac-8b4a-451be10a66b1",
+		"name": "Mercado Crédito",
+		"description": "Collection creada con los peticiones Http del challenge Backend Mercado Crédito",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10296139"
+	},
+	"item": [
+		{
+			"name": "Azure Environment",
+			"item": [
+				{
+					"name": "Loan-collection Azure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://challenge-1653614402940.azurewebsites.net/api/loan-collection?pageNo=1&pageSize=5",
+							"protocol": "https",
+							"host": [
+								"challenge-1653614402940",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"loan-collection"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2021-08-05 02:18Z",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2021-08-06 02:18Z",
+									"disabled": true
+								},
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Obtiene la lista de prestamos en ambiente Azure."
+					},
+					"response": []
+				},
+				{
+					"name": "Register-loan Azure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 1000,\r\n    \"term\": 12,\r\n    \"userId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://challenge-1653614402940.azurewebsites.net/api/register-loan",
+							"protocol": "https",
+							"host": [
+								"challenge-1653614402940",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"register-loan"
+							]
+						},
+						"description": "Crea un prestamo en ambiente Azure"
+					},
+					"response": []
+				},
+				{
+					"name": "Register-Payment Azure",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 1186.60638\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://challenge-1653614402940.azurewebsites.net/api/payment/2",
+							"protocol": "https",
+							"host": [
+								"challenge-1653614402940",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"payment",
+								"2"
+							]
+						},
+						"description": "Crea un pago en ambiente Azure"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Balance Azure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://challenge-1653614402940.azurewebsites.net/api/payments/debts?loanId=2",
+							"protocol": "https",
+							"host": [
+								"challenge-1653614402940",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"payments",
+								"debts"
+							],
+							"query": [
+								{
+									"key": "loanId",
+									"value": "2"
+								},
+								{
+									"key": "date",
+									"value": "2022-05-24T20:42:58-0500",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Obtiene el valor de la deuda de un prestamo hasta la fecha dada en ambiente Azure"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Total-Balance Azure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://challenge-1653614402940.azurewebsites.net/api/payments/total-debts?target=FREQUENT",
+							"protocol": "https",
+							"host": [
+								"challenge-1653614402940",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"payments",
+								"total-debts"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-05-24T01:04:51-0500",
+									"disabled": true
+								},
+								{
+									"key": "target",
+									"value": "FREQUENT"
+								}
+							]
+						},
+						"description": "Obtiene el valor total de la deuda de los prestamos hasta una fecha dada o de un target especifico en ambiente Azure"
+					},
+					"response": []
+				}
+			],
+			"description": "Carpeta creada con los peticiones Http del challenge Backend Mercado Crédito, apuntando a los endpoints desplegados en Azure App Services."
+		},
+		{
+			"name": "Dev Environment",
+			"item": [
+				{
+					"name": "Loan-collection",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/loan-collection?pageNo=1&pageSize=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"loan-collection"
+							],
+							"query": [
+								{
+									"key": "from",
+									"value": "2021-08-05 02:18Z",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2021-08-06 02:18Z",
+									"disabled": true
+								},
+								{
+									"key": "pageNo",
+									"value": "1"
+								},
+								{
+									"key": "pageSize",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Obtiene la lista de prestamos"
+					},
+					"response": []
+				},
+				{
+					"name": "Register-Loan",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 1000,\r\n    \"term\": 12,\r\n    \"userId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/register-loan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"register-loan"
+							]
+						},
+						"description": "Crea un prestamo"
+					},
+					"response": []
+				},
+				{
+					"name": "Register-Payment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"amount\": 85.60638\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/payment/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"payment",
+								"2"
+							]
+						},
+						"description": "Crea un pago"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/payments/debts?loanId=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"payments",
+								"debts"
+							],
+							"query": [
+								{
+									"key": "loanId",
+									"value": "2"
+								},
+								{
+									"key": "date",
+									"value": "2021-08-05 02:18Z",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Obtiene el valor de la deuda de un prestamo hasta la fecha dada"
+					},
+					"response": []
+				},
+				{
+					"name": "Get-Total-Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/payments/total-debts?target=FREQUENT",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"payments",
+								"total-debts"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2021-08-05 02:18Z",
+									"disabled": true
+								},
+								{
+									"key": "target",
+									"value": "FREQUENT"
+								}
+							]
+						},
+						"description": "Obtiene el valor total de la deuda de los prestamos hasta una fecha dada o de un target especifico"
+					},
+					"response": []
+				}
+			],
+			"description": "Carpeta creada StartFragment con los peticiones Http del challenge Backend Mercado Crédito, apuntando al ambiente de desarollo,\n\nEndFragment"
+		}
+	]
+}
