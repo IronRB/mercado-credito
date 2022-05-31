@@ -13,14 +13,24 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 public class LoanInput {
+
+    /**
+     * Monto del prestamo
+     */
     @Min(value = 0,message = "no debe ser menor a cero")
     @NotNull(message="es obligatorio")
     private float amount;
 
+    /**
+     * Número de cuotas
+     */
     @NotNull(message = "es obligatorio")
     @Min(value = 0,message = "no debe ser menor a cero")
     private int term;
 
+    /**
+     * Código unico del usuario
+     */
     @NotNull(message = "es obligatorio")
     @Min(value = 0,message = "no debe ser menor a cero")
     private long userId;

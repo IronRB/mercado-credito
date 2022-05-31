@@ -25,6 +25,14 @@ public class LoanController {
         this.iLoanService = iLoanService;
     }
 
+    /**
+     * Metodo para obtener la lista de prestamos por un rango de fechas con paginación
+     * @param from Fecha inicial de consulta
+     * @param to Fecha final de consulta
+     * @param pageNo Número de página
+     * @param pageSize Número de registros por página
+     * @return la lista de prestamos
+     */
     @GetMapping("/loan-collection")
     public List<LoanDetailOutput> getLoans(
             @RequestParam(required = false) String from,
@@ -34,6 +42,11 @@ public class LoanController {
         return iLoanService.getLoans(from,to,pageNo,pageSize);
     }
 
+    /**
+     * Metodo para crear un prestamo
+     * @param request Mensaje de entrada con el monto, plazo del prestamo en número de meses y id de usuario
+     * @return el id del prestamo y cálculo del valor de la cuota
+     */
     @PostMapping("/register-loan")
     @ResponseStatus(code = HttpStatus.CREATED)
     public LoanOutput postLoan(@RequestBody @Validated LoanInput request){return iLoanService.postLoan(request);}
