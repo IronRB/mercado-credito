@@ -12,6 +12,33 @@ Este repositorio fue creado con el objetivo de resolver Challenge Back-End Merca
 <a name="Información-General"></a>
 ## Información General 📖
 ***
+A este reto se planteó una solución de restfull API con 4 entidades: loan(Prestamos), user (usuario), Target (Indicador de usuario de su tasa de interes, según el número de prestamos solicitados y la cantidad de montos prestados) y Payment (Pagos).
+
+Tiene 5 endpoints:
+
+* GET Loan-collection: Listar de préstamos.
+* POST Register-loan: Solicitud de préstamo.
+* POST Register-Payment: Registro de pagos realizados.
+* GET Get-Balance: Obtener la deuda.
+* GET Get-Total-Balance: Obtener el total de la deuda.
+
+Vista general del proyecto:
+
+![Proyecto](/img/Estructura-proyecto.JPG)
+
+Archivo Yaml del pipeline como codigo:
+
+![Pipeline-as-code](/img/Pipeline-as-code.JPG)
+
+Proyecto postman para evaluvar los endpoints:
+
+![postman](/img/postman.JPG)
+
+##### Nota: En el proyecto Postman, se encuentran las peticiones para el ambiente local como el de Azure.
+
+Archivo Dockerfile:
+
+![Dockerfile](/img/dockerfile.JPG)
 
 <a name="Pre-requisitos"></a>
 ## Pre-requisitos 🔧
