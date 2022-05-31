@@ -19,15 +19,14 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin
 public class LoanController {
-    @Autowired
-    private static ILoanService iLoanService;
+    private ILoanService iLoanService;
 
     public LoanController(ILoanService iLoanService){
         this.iLoanService = iLoanService;
     }
 
     @GetMapping("/loan-collection")
-    public static List<LoanDetailOutput> getLoans(
+    public List<LoanDetailOutput> getLoans(
             @RequestParam(required = false) String from,
             @RequestParam(required = false) String to,
             @RequestParam(defaultValue = "1") Integer pageNo,

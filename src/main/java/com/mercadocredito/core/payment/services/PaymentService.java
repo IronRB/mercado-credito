@@ -7,7 +7,6 @@ import com.mercadocredito.core.payment.domain.input.PaymentInput;
 import com.mercadocredito.core.payment.domain.output.DebtOutput;
 import com.mercadocredito.core.payment.domain.output.PaymentOutput;
 import com.mercadocredito.core.payment.repository.IPaymentRepository;
-import com.mercadocredito.core.user.repository.UserRepository;
 import com.mercadocredito.exceptions.ResourceNotFoundException;
 import com.mercadocredito.utils.Calendar;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +26,11 @@ public class PaymentService implements IPaymentService {
 
     @Autowired
     private IPaymentRepository iPaymentRepository;
+
+    public PaymentService(ILoanRepository iLoanRepository,IPaymentRepository iPaymentRepository) {
+        this.iLoanRepository = iLoanRepository;
+        this.iPaymentRepository = iPaymentRepository;
+    }
 
     /**
      * @param loanId codigo único que identifica el préstamo
