@@ -33,7 +33,7 @@ https://github.com/IronRB/mercado-credito/blob/feature/RobertC/Challenge%20Back-
 
 Documentación Javadocs:
     
-    [Javadocs generado](docs/index.html)
+    /docs/index.html
 
 Documentación de los endpoints:
 
