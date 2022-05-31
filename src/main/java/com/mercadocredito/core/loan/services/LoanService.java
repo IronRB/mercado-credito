@@ -33,13 +33,10 @@ import java.util.List;
 @Service
 public class LoanService implements ILoanService {
 
-    @Autowired
     private ILoanRepository loanRepository;
 
-    @Autowired
     private UserRepository userRepository;
 
-    @Autowired
     private ITargetRepository targetRepository;
 
     public LoanService(ILoanRepository loanRepository,UserRepository userRepository,ITargetRepository targetRepository) {

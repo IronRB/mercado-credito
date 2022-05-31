@@ -19,7 +19,6 @@ import java.util.List;
 @RequestMapping("/api")
 @CrossOrigin
 public class LoanController {
-    @Autowired
     private ILoanService iLoanService;
 
     public LoanController(ILoanService iLoanService){

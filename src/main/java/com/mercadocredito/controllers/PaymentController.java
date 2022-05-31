@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class PaymentController {
 
-    @Autowired
     private IPaymentService iPaymentService;
 
     public PaymentController(IPaymentService iPaymentService) {
